@@ -1,0 +1,20 @@
+[
+  {
+    "customerName": "Barclay",
+    "coffeeType": "Quantam",
+    "cupsOrdered": 45,
+    "wantsSugar": true,
+    "weight": 56,
+    "energyBoost": 17886600,
+    "thinkingEnergy": 1788660
+  },
+  {
+    "customerName": "dg",
+    "coffeeType": "er",
+    "cupsOrdered": 4,
+    "wantsSugar": false,
+    "weight": 4,
+    "energyBoost": 1589920,
+    "thinkingEnergy": 158992
+  }
+]

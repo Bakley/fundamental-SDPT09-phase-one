@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "id": "1cee",
+      "name": "Wassabi",
+      "email": "barclaykoin@gmail.com"
+    },
+    {
+      "id": "a84f",
+      "name": "",
+      "email": "darth@vader.com"
+    },
+    {
+      "id": "a343",
+      "name": "Darth Varder",
+      "email": "barclaykoin+friends@gmail.com"
+    }
+  ],
+  "canine": [],
+  "birds": []
+}

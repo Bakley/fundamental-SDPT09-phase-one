@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul id="header-list">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+            </ul>
+        </nav>
+
+        <section>
+            <div class="cards">Hello</div>
+            <div class="cards">World</div>
+            <div class="cards">This is </div>
+            <div class="cards">Awesome</div>
+        </section>
+
+        <button id="myButton">Click Me!</button>
+        <input type="text" id="myInput" placeholder="Type something">
+
+        <div> This is an example</div>
+    </header>
+    <script>
+        const links = [
+            { text: 'About', href: 'about.html'},
+            { text: 'Features', href: 'features.html'}
+        ]
+
+        const navList = document.getElementById("header-list")
+        console.log(navList)
+
+        const cardsElements = document.getElementsByTagName("div")
+        console.log(cardsElements)
+
+        links.forEach((link) =>{
+            const listItem = document.createElement('li')
+            
+            // <li><a href="about.html">About</a></li>
+            const anchorTag = document.createElement('a')
+            // <a href="about.html">About</a>
+            anchorTag.textContent = link.text
+            anchorTag.href = link.href
+            // 
+            listItem.appendChild(anchorTag)
+            navList.append(listItem)
+        })
+
+        const buttonElement = document.getElementById('myButton')
+        const callBack = (e)=>{
+            alert("The button was clicked!")
+            console.log(e.type)
+        }
+        buttonElement.addEventListener("click", callBack)
+
+        // buttonElement.removeEventListener("click", callBack)
+
+        document.getElementById('myInput').addEventListener("keydown", (event)=>{
+            console.log("Key pressed:", event.key, event.type, event.target)
+        })
+
+
+
+    </script>
+</body>
+</html>

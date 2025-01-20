@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="userForm">
+        <h3>Create data</h3>
+        <label>User Name:</label>
+        <input type="text" name="name" id="name">
+        <br>
+
+        <label>Email:</label>
+        <input type="email" name="email" id="email">
+        <br>
+
+        <button type="submit">Click Me</button>
+
+    </form>
+
+    <form id="updateForm">
+        <h3>Update the User data</h3>
+        <label>User ID</label>
+        <input type="text" name="userId" id="updateUserId" required>
+        <br>
+
+        <label>New Email</label>
+        <input type="email" name="email" id="updateEmail" required>
+        <br>
+
+        <button type="submit">Update</button>
+    </form>
+
+    <form id="deleteForm">
+        <h3>Delete the User data</h3>
+        <label>User ID</label>
+        <input type="text" name="userId" id="updateUserId" required>
+        <br>
+
+
+        <button type="submit">Delete</button>
+    </form>
+
+    <form id="getUserForm">
+        <h3>Fetch the User data</h3>
+        <label>User ID</label>
+        <input type="text" name="userId" id="userId" required>
+        <br>
+
+
+        <button type="submit">Get User</button>
+    </form>
+
+    <div id="results">
+        <h3>Response:</h3>
+        <pre id="output"></pre>
+    </div>
+
+
+    <div id="successBanner" class="banner"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const getUserForm = document.querySelector("#getUserForm")
+            const output = document.querySelector("#output")
+
+            getUserForm.addEventListener("submit", (event) => {
+                event.preventDefault()
+
+                const userId = document.querySelector("#userId").value
+
+                try {
+                    const response = fetch(`http://localhost:3000/users/${userId}`)
+
+                    if (!response.ok){
+                        throw new Error()
+                    }
+
+                    const data = response.json()
+                    console.log(data)
+
+                    output.textContent = JSON.stringify(data, null, 2)
+                } catch (error) {
+                    
+                }
+            })
+
+
+            const showBanner = (message) => {
+                const banner = document.getElementById("successBanner")
+                banner.textContent = message
+                banner.style.display = "block"
+
+                setTimeout(() => {
+                    banner.style.display = "none"
+
+                }, 10000)
+            }
+            // Post Data
+            const form = document.querySelector("#userForm")
+            form.addEventListener("submit", async (event) => {
+                event.preventDefault()
+
+                const formData = new FormData(form)
+                console.log(formData)
+                const info = {
+                    "name": formData.get("name"),
+                    "email": formData.get("email")
+                }
+                console.log(JSON.stringify(info))
+
+                try {
+                    const response = await fetch("http://localhost:3000/users", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body : JSON.stringify(info)
+
+                });
+                if(!response.ok){
+                    throw new Error(`HTTP Error: ${response.status}`)
+                }
+
+                const data = await response.json()
+                console.log(data)
+                showBanner("User created")
+
+                    
+                } catch (error) {
+                    console.error(error)
+                    
+                }   
+            })
+
+            // Patch Data
+            const updateForm = document.querySelector("#updateForm")
+            updateForm.addEventListener("submit", async (event) => {
+                event.preventDefault()
+
+                const formData = new FormData(updateForm)
+                const userId = formData.get("userId")
+                const newEmail = formData.get("email")
+
+                try {
+                    const response = await fetch(`http://localhost:3000/users/${userId}`, {
+                        method: "PATCH",
+                        headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                     body: JSON.stringify({email: newEmail})
+                    })
+
+                    if(!response.ok) {
+                        throw new Error()
+                    }
+
+                    const data = await response.json()
+                    showBanner("User updated")
+                    
+                } catch (error) {
+                    
+                }
+
+
+            })
+
+            // Deletion
+            const deleteForm = document.querySelector("#deleteForm")
+            deleteForm.addEventListener("submit", async (event) => {
+                event.preventDefault()
+
+                const formData = new FormData(deleteForm)
+                const userId = formData.get("userId")
+
+                try {
+                    const response = await fetch(`http://localhost:3000/users/${userId}`, {
+                        method: "DELETE",
+                        headers: {
+                        "Accept": "application/json"
+                    }})
+
+                    if(!response.ok) {
+                        throw new Error()
+                    }
+
+                    showBanner("User successfully deleted!")
+                    
+                } catch (error) {
+                    
+                }
+
+
+            })
+        })
+
+    </script>
+    
+</body>
+</html>
